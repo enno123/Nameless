@@ -180,11 +180,18 @@ class User {
     }
 
     /**
+     * @deprecated Use getGroupStyle instead
+     */
+    public function getGroupClass(): string {
+        return this->getGroupStyle();
+    }
+
+    /**
      * Get this user's main group CSS styling
      *
      * @return string The CSS styling.
      */
-    public function getGroupClass(): string {
+    public function getGroupStyle(): string {
         $group = $this->getMainGroup();
 
         $group_username_color = Output::getClean($group->group_username_color);
@@ -395,12 +402,12 @@ class User {
      * @param bool $username If true, will use their username. If false, will use their nickname.
      * @return string Their display name.
      */
-    public function getDisplayName(bool $username = false): string {
+    public function getDisplayname(bool $username = false): string {
         if ($username) {
-            return Output::getClean($this->data()->username);
+            return $this->data()->username;
         }
 
-        return Output::getClean($this->data()->nickname);
+        return $this->data()->nickname;
     }
 
     /**
@@ -790,7 +797,7 @@ class User {
                 $pm = $pm[0];
 
                 $return[$pm->id]['id'] = $pm->id;
-                $return[$pm->id]['title'] = Output::getClean($pm->title);
+                $return[$pm->id]['title'] = $pm->title;
                 $return[$pm->id]['created'] = $pm->created;
                 $return[$pm->id]['updated'] = $pm->last_reply_date;
                 $return[$pm->id]['user_updated'] = $pm->last_reply_user;
